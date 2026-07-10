@@ -11,23 +11,29 @@ def show_nims(board):
 
 def before_start_game():
     print("Bienvenue dans le jeu de Nim.")
-    number_player = 0
+    SAY_YOUR_NAME = "Saisissez votre nom:"
+    number_player, start_player1 = 0, False
     name_player1, name_player2 = "", ""
-    say_your_name = "Saisissez votre nom:"
 
     while number_player != 1 and number_player != 2:
         try:
-            number_player = int(input("Vous souhaitez jouer contre l'ordinateur (1) ou votre ami (2) ? (1/2):"))
+            number_player = int(input("Vous souhaitez jouer contre l'ordinateur (1) ou votre ami (2) ? [1/2]:"))
         except ValueError:
-            print("Saisie non correcte")
+            print("Erreur de saisie.")
 
-    if number_player == 1:
-        name_player1 = input(say_your_name)
-        return name_player1, name_player2, True
+    name_player1 = input(f"Joueur 1: {SAY_YOUR_NAME}")
+    if number_player == 2:
+        name_player2 = input(f"Joueur 2: {SAY_YOUR_NAME}")
 
-    name_player1 = input(f"Joueur 1: {say_your_name}")
-    name_player2 = input(f"Joueur 2: {say_your_name}")
-    return name_player1, name_player2, False
+    check_player1_start = ""
+
+    while check_player1_start != 'y' and check_player1_start != 'n':
+        try:
+            check_player1_start = input(f"Est-ce que c'est {name_player1} qui commence ? [y/n] ")
+        except ValueError:
+            print("Erreur de saisie.")
+
+    return frozenset([name_player1, name_player2, start_player1, check_player1_start == 'y'])
 
 
 if __name__ == "__main__":
