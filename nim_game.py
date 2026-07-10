@@ -36,7 +36,12 @@ def before_start_game():
     return frozenset([name_player1, name_player2, start_player1, check_player1_start == 'y'])
 
 
+def take_nim(board, number_nim):
+    first_index_nim = board.index(True)
+    board[first_index_nim:first_index_nim+number_nim] = [False] * number_nim
+    return board
+
+
 if __name__ == "__main__":
     NIMS_NUMBER = 21
-    before_start_game()
-    show_nims(init_nims(NIMS_NUMBER))
+    show_nims(take_nim(take_nim(init_nims(NIMS_NUMBER), 6), 4))
