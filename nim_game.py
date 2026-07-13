@@ -44,7 +44,12 @@ def before_start_game():
 
 def take_match(board, number_match):
     first_index_match = board.index(True)
-    board[first_index_match:first_index_match + number_match] = [False] * number_match
+    last_index_match_remove = first_index_match + number_match
+
+    if last_index_match_remove < MATCH_NUMBER:
+        board[first_index_match:last_index_match_remove] = [False] * number_match
+    else:
+        board[first_index_match:MATCH_NUMBER] = [False] * (MATCH_NUMBER - first_index_match)
     return board
 
 
@@ -62,7 +67,7 @@ def loop_game():
         match_remove = input(
                 f"{turn_order[your_turn]}, combien d'allumettes souhaites-tu retirer (entre 1 et 4).")
 
-        while match_remove.isdigit() and not 1 <= int(match_remove) <= 4:
+        while not (len(match_remove) == 1 and match_remove.isdigit() and 1 <= int(match_remove) <= 4):
             print(ERROR_INPUT)
             match_remove = input(
                 f"{turn_order[your_turn]}, combien d'allumettes souhaites-tu retirer (entre 1 et 4).")
