@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import secrets
+from itertools import count
+
 MATCH_NUMBER = 21
 ERROR_INPUT = "Erreur de saisie."
 
@@ -53,8 +56,16 @@ def take_match(board, number_match):
     return board
 
 
+def computer_play(board):
+    match_to_take = (board.count(True) - 1) % 5
+
+    if match_to_take == 0:
+        return 4 - secrets.randbelow(4)
+    return match_to_take
+
+
 def loop_game():
-    name_player1, name_player2, start_player1, _ = before_start_game()
+    name_player1, name_player2, start_player1, computer_is_play = before_start_game()
     board = init_nims(MATCH_NUMBER)
 
     if start_player1:
@@ -62,15 +73,19 @@ def loop_game():
     else:
         turn_order = (name_player2, name_player1)
 
-    your_turn = 0
+    your_turn, match_remove = 0, 0
     while any(board):
-        match_remove = input(
-                f"{turn_order[your_turn]}, combien d'allumettes souhaites-tu retirer (entre 1 et 4).")
-
-        while not (len(match_remove) == 1 and match_remove.isdigit() and 1 <= int(match_remove) <= 4):
-            print(ERROR_INPUT)
+        if computer_is_play and turn_order[your_turn] is name_player2:
+            match_remove = computer_play(board)
+            print(f"L'{turn_order[your_turn]} a pris {match_remove} allumette(s)")
+        else:
             match_remove = input(
                 f"{turn_order[your_turn]}, combien d'allumettes souhaites-tu retirer (entre 1 et 4).")
+
+            while not (len(match_remove) == 1 and match_remove.isdigit() and 1 <= int(match_remove) <= 4):
+                print(ERROR_INPUT)
+                match_remove = input(
+                    f"{turn_order[your_turn]}, combien d'allumettes souhaites-tu retirer (entre 1 et 4).")
 
         board = take_match(board, int(match_remove))
         show_nims(board)
