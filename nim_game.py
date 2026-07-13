@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import secrets
-from itertools import count
 
 MATCH_NUMBER = 21
 ERROR_INPUT = "Erreur de saisie."
