@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+MATCH_NUMBER = 21
+ERROR_INPUT = "Erreur de saisie."
+
+
 def init_nims(nims_number):
     return [True for _ in range(nims_number)]
 
@@ -12,18 +16,20 @@ def show_nims(board):
 def before_start_game():
     print("Bienvenue dans le jeu de Nim.")
     SAY_YOUR_NAME = "Saisissez votre nom:"
-    number_player, start_player1 = 0, False
-    name_player1, name_player2 = "", ""
+    number_player, start_player1, is_computer = 0, False, False
 
     while number_player != 1 and number_player != 2:
         try:
             number_player = int(input("Vous souhaitez jouer contre l'ordinateur (1) ou votre ami (2) ? [1/2]:"))
         except ValueError:
-            print("Erreur de saisie.")
+            print(ERROR_INPUT)
 
     name_player1 = input(f"Joueur 1: {SAY_YOUR_NAME}")
     if number_player == 2:
         name_player2 = input(f"Joueur 2: {SAY_YOUR_NAME}")
+    else:
+        is_computer = True
+        name_player2 = "Ordinateur"
 
     check_player1_start = ""
 
@@ -31,17 +37,42 @@ def before_start_game():
         try:
             check_player1_start = input(f"Est-ce que c'est {name_player1} qui commence ? [y/n] ")
         except ValueError:
-            print("Erreur de saisie.")
+            print(ERROR_INPUT)
 
-    return frozenset([name_player1, name_player2, start_player1, check_player1_start == 'y'])
+    return name_player1, name_player2, (start_player1 or check_player1_start == 'y'), is_computer
 
 
-def take_nim(board, number_nim):
-    first_index_nim = board.index(True)
-    board[first_index_nim:first_index_nim+number_nim] = [False] * number_nim
+def take_match(board, number_match):
+    first_index_match = board.index(True)
+    board[first_index_match:first_index_match + number_match] = [False] * number_match
     return board
 
 
+def loop_game():
+    name_player1, name_player2, start_player1, _ = before_start_game()
+    board = init_nims(MATCH_NUMBER)
+
+    if start_player1:
+        turn_order = (name_player1, name_player2)
+    else:
+        turn_order = (name_player2, name_player1)
+
+    your_turn = 0
+    while any(board):
+        match_remove = input(
+                f"{turn_order[your_turn]}, combien d'allumettes souhaites-tu retirer (entre 1 et 4).")
+
+        while match_remove.isdigit() and not 1 <= int(match_remove) <= 4:
+            print(ERROR_INPUT)
+            match_remove = input(
+                f"{turn_order[your_turn]}, combien d'allumettes souhaites-tu retirer (entre 1 et 4).")
+
+        board = take_match(board, int(match_remove))
+        show_nims(board)
+        your_turn = (your_turn + 1) % 2
+
+    print(f"{turn_order[your_turn]}, vous avez gagné. Félicitations !")
+
+
 if __name__ == "__main__":
-    NIMS_NUMBER = 21
-    show_nims(take_nim(take_nim(init_nims(NIMS_NUMBER), 6), 4))
+    loop_game()
