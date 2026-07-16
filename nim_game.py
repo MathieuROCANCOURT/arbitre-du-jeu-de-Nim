@@ -26,6 +26,12 @@ def show_nims(board):
 
 
 def before_start_game():
+    """
+    Ask the user for their name, whether they want to play against the computer or another user, and which user goes
+    first.
+
+    :return: Player names, Player 1 starts the turn in boolean and Play against the computer in boolean.
+    """
     print("Bienvenue dans le jeu de Nim.")
     SAY_YOUR_NAME = "Saisissez votre nom:"
     number_player, start_player1, is_computer = 0, False, False
