@@ -79,6 +79,12 @@ def take_match(board, number_match):
 
 
 def computer_play(board):
+    """
+    Moves made by the computer to collect the matches on the board
+
+    :param board: Boolean array
+    :return: Number of match(es) taken
+    """
     match_to_take = (board.count(True) - 1) % 5
 
     if match_to_take == 0:
