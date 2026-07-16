@@ -34,7 +34,7 @@ def before_start_game():
     """
     print("Bienvenue dans le jeu de Nim.")
     SAY_YOUR_NAME = "Saisissez votre nom:"
-    number_player, start_player1, is_computer = 0, False, False
+    number_player, is_computer = 0, False
 
     while number_player != 1 and number_player != 2:
         try:
@@ -57,7 +57,7 @@ def before_start_game():
         except ValueError:
             print(ERROR_INPUT)
 
-    return name_player1, name_player2, (start_player1 or check_player1_start == 'y'), is_computer
+    return name_player1, name_player2, check_player1_start == 'y', is_computer
 
 
 def take_match(board, number_match):
