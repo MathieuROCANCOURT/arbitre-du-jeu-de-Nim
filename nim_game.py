@@ -7,13 +7,13 @@ MATCH_NUMBER = 21
 ERROR_INPUT = "Erreur de saisie."
 
 
-def init_nims(nims_number):
+def init_nims():
     """
     Setting up the board game
 
     :return: True array
     """
-    return [True for _ in range(nims_number)]
+    return [True for _ in range(MATCH_NUMBER)]
 
 
 def show_nims(board):
@@ -70,7 +70,7 @@ def computer_play(board):
 
 def loop_game():
     name_player1, name_player2, start_player1, computer_is_play = before_start_game()
-    board = init_nims(MATCH_NUMBER)
+    board = init_nims()
 
     if start_player1:
         turn_order = (name_player1, name_player2)
