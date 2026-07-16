@@ -101,12 +101,15 @@ def loop_game():
     name_player1, name_player2, start_player1, computer_is_play = before_start_game()
     board = init_nims()
 
+    # Create a tuple to determine the order in which the players play.
     if start_player1:
         turn_order = (name_player1, name_player2)
     else:
         turn_order = (name_player2, name_player1)
 
     your_turn, match_remove = 0, 0
+
+    # While all the matches haven't been taken
     while any(board):
         if computer_is_play and turn_order[your_turn] is name_player2:
             match_remove = computer_play(board)
