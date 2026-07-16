@@ -93,6 +93,11 @@ def computer_play(board):
 
 
 def loop_game():
+    """
+    The game started with the settings, and the program manages the display based on the user's and the computer's
+    actions.
+    Display the user's actions, valid and invalid inputs, the game's status and the winner.
+    """
     name_player1, name_player2, start_player1, computer_is_play = before_start_game()
     board = init_nims()
 
