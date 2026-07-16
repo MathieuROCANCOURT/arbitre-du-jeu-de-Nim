@@ -8,6 +8,11 @@ ERROR_INPUT = "Erreur de saisie."
 
 
 def init_nims(nims_number):
+    """
+    Setting up the board game
+
+    :return: True array
+    """
     return [True for _ in range(nims_number)]
 
 
