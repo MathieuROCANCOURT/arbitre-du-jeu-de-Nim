@@ -17,6 +17,11 @@ def init_nims():
 
 
 def show_nims(board):
+    """
+    Show the board game where an “o” indicates that there is a match
+
+    :param board: True and False array
+    """
     print('|' + ''.join(['o|' if nim else ' |' for nim in board]))
 
 
