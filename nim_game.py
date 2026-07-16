@@ -61,6 +61,13 @@ def before_start_game():
 
 
 def take_match(board, number_match):
+    """
+    The user or the computer takes the number of matches to be taken from the game board
+
+    :param board: Boolean array
+    :param number_match: Number match to take
+    :return: Boolean table after taking matches
+    """
     first_index_match = board.index(True)
     last_index_match_remove = first_index_match + number_match
 
